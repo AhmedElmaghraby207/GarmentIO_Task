@@ -1,0 +1,76 @@
+<%include ./partials/header.ejs%>
+<div class="container">
+  <table class="table text-center table-bordered">
+    <thead class="bg-info">
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Hiring Date</th>
+        <th>Attendance</th>
+        <th>Off Days</th>
+        <th>Sick Leave</th>
+        <th>Working Hours/Day</th>
+        <th>State</th>
+      </tr>
+    </thead>
+    <%if(employees){%>
+    <tbody>
+      <%employees.forEach((emp)=>{%>
+      <tr>
+        <td><%=emp.name%></td>
+        <td><%=emp.age%></td>
+        <td><%=emp.hiringDate%></td>
+        <td>
+          <%emp.attendance.forEach(att => {%>
+          <ol>
+            <li><%=att%></li>
+          </ol>
+          <%})%>
+        </td>
+        <td>
+          <%emp.offDays.forEach(day => {%>
+          <ol>
+            <li><%=day%></li>
+          </ol>
+          <%})%>
+        </td>
+        <td>
+          <%emp.sickLeave.forEach(leave => {%>
+          <ol>
+            <li><%=leave%></li>
+          </ol>
+          <%})%>
+        </td>
+        <td>
+          <%emp.workingHours.forEach(work => {%>
+          <ol>
+            <li><%=work.day%><span class="badge badge-pill badge-success"><%=work.hours%></span>
+            </li>
+          </ol>
+          <%})%>
+        </td>
+        <td>
+          <%if(emp.deleted==false){%>
+          <a
+            href="/garment-employee/delete/<%=emp._id%>"
+            class="btn btn-danger btn-sm"
+            >Delete</a
+          >
+          <%} else {%>
+          <a
+            href="/garment-employee/recover/<%=emp._id%>"
+            class="btn btn-primary btn-sm"
+            >Restore</a
+          >
+          <%}%>
+        </td>
+      </tr>
+      <%})%>
+    </tbody>
+    <%} else {%>
+    <p class="text-center">No employees yet!</p>
+    <%}%>
+  </table>
+</div>
+
+<%include ./partials/footer.ejs%>
